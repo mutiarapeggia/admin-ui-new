@@ -2,12 +2,13 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="flex justify-center min-h-screen items-center bg-special-mainBg">
+    <main className="min-h-screen bg-special-mainBg flex justify-center items-center">
       {/* container start */}
       <div className="w-full max-w-sm">
         {/* logo start */}
         <div className="flex justify-center font-poppins tracking-wide text-primary text-4xl">
-          <span className="font-bold">FINE</span>bank
+          <span className="font-bold">FINE</span>
+          bank
           <span className="font-bold">.IO</span>
         </div>
         {/* logo end */}
@@ -16,11 +17,11 @@ function App() {
           <form action="">
             <div className="mb-6">
               <label htmlFor="email" className="block text-sm mb-2">
-                Email Address
+                Email address
               </label>
               <input
                 type="email"
-                className="py-3 ps-4 text-sm border rounded-md w-full bg-special-mainBg border-gray-03 text-gray-01 focus:border-black focus:outline-none focus:ring-0"
+                className="py-3 ps-4 text-sm rounded-md w-full bg-special-mainBg border border-gray-03 text-gray-01 focus:border-black focus:outline-none focus:ring-0"
                 placeholder="hello@example.com"
                 name="email"
                 id="email"
@@ -32,7 +33,7 @@ function App() {
               </label>
               <input
                 type="password"
-                className="py-3 ps-4 text-sm border rounded-md w-full bg-special-mainBg border-gray-03 text-gray-01 focus:border-black focus:outline-none focus:ring-0"
+                className="py-3 ps-4 text-sm rounded-md w-full bg-special-mainBg border border-gray-03 text-gray-01 focus:border-black focus:outline-none focus:ring-0"
                 placeholder="************"
                 name="password"
                 id="password"
@@ -59,13 +60,13 @@ function App() {
         </div>
         {/* form end */}
         {/* teks start */}
-        <div className="my-9 px-7 flex justify-center text-xs text-gray-03 items-center flex-col">
+        <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
           <div className="border border-gray-05 w-full"></div>
           <div class="px-2 bg-special-mainBg absolute"> or sign in with</div>
         </div>
         {/* teks end */}
         {/* sign in with google start */}
-        <div className="mb-8">
+        <div>
           <button
             className="h-12 flex items-center justify-center rounded-md text-sm w-full bg-gray-05 text-gray-01"
             type="button"
@@ -125,7 +126,7 @@ function App() {
         {/* link end */}
       </div>
       {/* container end */}
-    </div>
+    </main>
   );
 }
 

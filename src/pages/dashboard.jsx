@@ -7,7 +7,12 @@ import CardUpcommingBill from "../components/Fragments/CardUpcommingBill";
 import CardRecentransactions from "../components/Fragments/CardRecentransactions";
 import CardStatistics from "../components/Fragments/CardStatistics";
 import CardExpensesBreakdown from "../components/Fragments/CardExpensesBreakdown";
-import { bills, expensesStatistics, transactions } from "../data";
+import {
+  bills,
+  expensesBreakdowns,
+  expensesStatistics,
+  transactions,
+} from "../data";
 
 function dashboard() {
   console.log(transactions);
@@ -31,7 +36,7 @@ function dashboard() {
         <CardStatistics />
       </div>
       <div className="sm:col-span-8">
-        <CardExpensesBreakdown data={expensesStatistics} />
+        <CardExpensesBreakdown data={expensesBreakdowns} />
       </div>
     </MainLayout>
   );

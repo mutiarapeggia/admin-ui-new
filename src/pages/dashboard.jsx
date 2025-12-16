@@ -10,8 +10,10 @@ import CardExpensesBreakdown from "../components/Fragments/CardExpensesBreakdown
 import {
   bills,
   expensesBreakdowns,
-  expensesStatistics,
+  balances,
+  goals,
   transactions,
+  expensesStatistics,
 } from "../data";
 
 function dashboard() {
@@ -20,10 +22,10 @@ function dashboard() {
     <MainLayout>
       <div className="grid sm:grid-cols-12 gap-6">
         <div className="sm:col-span-4">
-          <CardBalance />
+          <CardBalance data={balances} />
         </div>
         <div className="sm:col-span-4">
-          <CardGoal />
+          <CardGoal data={goals} />
         </div>
         <div className="sm:col-span-4">
           <CardUpcommingBill data={bills} />
@@ -33,7 +35,7 @@ function dashboard() {
         <CardRecentransactions data={transactions} />
       </div>
       <div className="sm:col-span-8">
-        <CardStatistics />
+        <CardStatistics data={expensesStatistics} />
       </div>
       <div className="sm:col-span-8">
         <CardExpensesBreakdown data={expensesBreakdowns} />

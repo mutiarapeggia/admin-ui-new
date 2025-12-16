@@ -18,7 +18,7 @@ function dashboard() {
   console.log(transactions);
   return (
     <MainLayout>
-      <div className="grid sm:grid-cols-12 sm:grid-rows-3 gap-6 h-full">
+      <div className="grid sm:grid-cols-12 gap-6">
         <div className="sm:col-span-4">
           <CardBalance />
         </div>

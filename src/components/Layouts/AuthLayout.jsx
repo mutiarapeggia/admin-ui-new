@@ -1,21 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import Logo from "../Elements/Logo";
+import { ThemeContext } from "../../context/themeContext";
 
 function AuthLayout(props) {
   const { children } = props;
-  return (
-    <>
-      <main className="min-h-screen bg-special-mainBg flex justify-center items-center">
-        {/* container start */}
-        <div className="w-full max-w-sm">
-          <Logo />
-          {children}
+  const { theme } = useContext(ThemeContext);
 
-          {/* form */}
-        </div>
-        {/* container end */}
-      </main>
-    </>
+  return (
+    <main
+      className={`min-h-screen bg-special-mainBg flex justify-center items-center ${theme.name}`}
+    >
+      {/* container start */}
+      <div className="w-full max-w-sm">
+        <Logo />
+        {children}
+      </div>
+      {/* container end */}
+    </main>
   );
 }
 

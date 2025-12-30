@@ -5,6 +5,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Icon from "../Elements/Icon";
 import { NavLink } from "react-router-dom";
 import { ThemeContext } from "../../context/themeContext";
+import { AuthContext } from "../../context/authContext";
 
 function MainLayout(props) {
   const { children } = props;
@@ -33,6 +34,8 @@ function MainLayout(props) {
     { id: 6, name: "Goals", icon: <Icon.Goal />, link: "/goal" },
     { id: 7, name: "Settings", icon: <Icon.Setting />, link: "/setting" },
   ];
+
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -86,9 +89,8 @@ function MainLayout(props) {
             <div className="flex justify-between items-center">
               <div>Avatar</div>
               <div className="hidden sm:block">
-                Username
-                <br />
-                View Profile
+                <div>{user.name}</div>
+                <div>View Profile</div>
               </div>
               <div className="hidden sm:block">
                 <Icon.Detail size={15} />

@@ -1,11 +1,22 @@
 import React from "react";
 import AuthLayout from "../components/Layouts/AuthLayout";
 import FormSignIn from "../components/Fragments/FormSignIn";
+import { loginService } from "../services/authService";
 
 function signIn() {
+  const handleLogin = async (email, password) => {
+    try {
+      const { refreshToken } = await loginService(email, password);
+
+      console.log(refreshToken);
+    } catch (err) {
+      console.error(err.msg);
+    }
+  };
+
   return (
     <AuthLayout>
-      <FormSignIn />
+      <FormSignIn onSubmit={handleLogin} />
     </AuthLayout>
   );
 }

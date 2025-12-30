@@ -4,13 +4,13 @@ import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
 import { useState } from "react";
 
-function FormSignIn() {
+function FormSignIn({ onSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email + password);
+    onSubmit(email, password);
   };
 
   return (
@@ -49,7 +49,7 @@ function FormSignIn() {
               name="status"
             />
           </div>
-          <Button type="button">Login</Button>
+          <Button type="submit">Login</Button>
         </form>
       </div>
       {/* form end */}

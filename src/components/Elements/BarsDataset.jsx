@@ -1,5 +1,5 @@
 import { BarChart } from "@mui/x-charts/BarChart";
-import React from "react";
+import * as React from "react";
 import { ThemeContext } from "../../context/themeContext";
 
 const chartSetting = {

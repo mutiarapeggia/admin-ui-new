@@ -30,7 +30,7 @@ function dashboard() {
         <div className="sm:col-span-4">
           <CardUpcommingBill data={bills} />
         </div>
-      </div>
+     
       <div className="sm:col-span-4 sm:row-span-2">
         <CardRecentransactions data={transactions} />
       </div>
@@ -40,6 +40,7 @@ function dashboard() {
       <div className="sm:col-span-8">
         <CardExpensesBreakdown data={expensesBreakdowns} />
       </div>
+       </div>
     </MainLayout>
   );
 }

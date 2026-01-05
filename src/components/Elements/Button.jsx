@@ -14,11 +14,9 @@ function Button(props) {
   }`;
   return (
     <>
-           
       <button className={finalClasses} type={type}>
-               {children}     
+        {children}
       </button>
-         
     </>
   );
 }

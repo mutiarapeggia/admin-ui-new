@@ -1,106 +1,177 @@
 import React from "react";
 import LabeledInput from "../Elements/LabeledInput";
-import CheckBox from "../Elements/CheckBox";
 import Button from "../Elements/Button";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Link } from "react-router-dom";
 
-function FormSignUp() {
+const SignUpSchema = Yup.object().shape({
+  name: Yup.string().required("Nama wajib diisi"),
+  email: Yup.string().email("Email tidak valid").required("Email wajib diisi"),
+  password: Yup.string()
+    .min(8, "Password minimal 8 karakter")
+    .required("Password wajib diisi"),
+});
+
+function FormSignUp({ onSubmit }) {
   return (
     <>
-      {/* form start */}
       <div className="mt-16">
-        <form action="">
-          {/* Name */}
-          <div className="mb-6">
-            <LabeledInput
-              label="Name"
-              id="name"
-              type="text"
-              placeholder="Tanzir Rahman"
-              name="name"
-            />
-          </div>
+        <Formik
+          initialValues={{ name: "", email: "", password: "" }}
+          validationSchema={SignUpSchema}
+          onSubmit={async (values, { setSubmitting, setStatus, resetForm }) => {
+            setStatus(null);
 
-          {/* Email Address */}
-          <div className="mb-6">
-            <LabeledInput
-              label="Email Address"
-              id="email"
-              type="email"
-              placeholder="hello@example.com"
-              name="email"
-            />
-          </div>
+            try {
+              await onSubmit(values); // API call
+              resetForm(); // ✅ hanya jika sukses
+            } catch (error) {
+              // 🔥 error dari backend (email sudah dipakai)
+              setStatus(error.message || "Register gagal");
+            } finally {
+              setSubmitting(false);
+            }
+          }}
+        >
+          {({ isSubmitting, status }) => (
+            <Form>
+              {/* ERROR BACKEND */}
+              {status && (
+                <p className="text-red-500 text-sm mb-4 text-center">
+                  {status}
+                </p>
+              )}
 
-          {/* Password */}
-          <div className="mb-6">
-            <LabeledInput
-              label="Password"
-              id="password"
-              type="password"
-              placeholder="***********"
-              name="password"
-            />
-          </div>
+              {/* NAME */}
+              <div className="mb-6">
+                <Field name="name">
+                  {({ field }) => (
+                    <LabeledInput
+                      {...field}
+                      label="Name"
+                      placeholder="Tanzir Rahman"
+                    />
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="name"
+                  component="p"
+                  className="text-red-500 text-xs mt-1"
+                />
+              </div>
 
-          {/* Agreement */}
-          <div className="mb-3">
-            <CheckBox
-              label=" I agree to the terms and service"
-              id="terms"
-              type="checkbox"
-              name="terms"
-            />
-          </div>
+              {/* EMAIL */}
+              <div className="mb-6">
+                <Field name="email">
+                  {({ field }) => (
+                    <LabeledInput
+                      {...field}
+                      label="Email Address"
+                      placeholder="hello@example.com"
+                    />
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="email"
+                  component="p"
+                  className="text-red-500 text-xs mt-1"
+                />
+              </div>
 
-          <Button type="button">Sign up</Button>
-        </form>
+              {/* PASSWORD */}
+              <div className="mb-6">
+                <Field name="password">
+                  {({ field }) => (
+                    <LabeledInput
+                      {...field}
+                      type="password"
+                      label="Password"
+                      placeholder="••••••••"
+                    />
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="password"
+                  component="p"
+                  className="text-red-500 text-xs mt-1"
+                />
+              </div>
+
+              {/* BUTTON */}
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Register"}
+              </Button>
+            </Form>
+          )}
+        </Formik>
       </div>
-      {/* form end */}
 
-      {/* teks start */}
-      <div className="my-9 px-7 flex flex-col justify-center items-center text-xs text-gray-03">
+      <div className="my-9 px-7 flex justify-center items-center text-xs text-gray-03 relative">
         <div className="border border-gray-05 w-full"></div>
-        <div className="px-2 bg-special-mainBg absolute"> or sign up with</div>
+        <div className="px-2 bg-special-mainBg absolute">or sign up with</div>
       </div>
-      {/* teks end */}
 
-      {/* sign up with google start */}
+      {/* sign in with google start */}
       <div className="mb-8">
         <Button type="button" variant="secondary">
           <span className="flex items-center justify-center">
             <svg
-              className="h-6 w-6 mr-2"
+              class="h-6 w-6 mr-2"
               xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="800px"
+              height="800px"
               viewBox="-0.5 0 48 48"
+              version="1.1"
             >
-              <path
-                fill="#FBBC05"
-                d="M9.83 24c0-1.52.25-2.98.7-4.36L2.62 13.6A23.76 23.76 0 000.21 24c0 3.74.87 7.26 2.41 10.39l7.9-6.05A14 14 0 019.83 24"
-              />
-              <path
-                fill="#EB4335"
-                d="M23.71 10.13c3.31 0 6.3 1.17 8.65 3.1l6.84-6.84A23.6 23.6 0 0023.71.53c-9.28 0-17.26 5.31-21.09 13.07l7.9 6.07c1.82-5.53 7.01-9.54 13.19-9.54"
-              />
-              <path
-                fill="#34A853"
-                d="M23.71 37.87c-6.17 0-11.37-4.02-13.19-9.54l-7.9 6.07C6.48 42.16 14.46 47.47 23.71 47.47c5.74 0 11.2-2.04 15.28-5.85l-7.51-5.8a13.9 13.9 0 01-7.77 2.05"
-              />
-              <path
-                fill="#4285F4"
-                d="M46.15 24c0-1.38-.21-2.87-.54-4.27H23.71v9.07h12.6a11.4 11.4 0 01-4.79 6.03l7.51 5.8A23.8 23.8 0 0046.15 24"
-              />
+              <title>Google-color</title> <desc>Created with Sketch.</desc>
+              <defs> </defs>
+              <g
+                id="Icons"
+                stroke="none"
+                stroke-width="1"
+                fill="none"
+                fill-rule="evenodd"
+              >
+                <g id="Color-" transform="translate(-401.000000, -860.000000)">
+                  <g id="Google" transform="translate(401.000000, 860.000000)">
+                    <path
+                      d="M9.82727273,24 C9.82727273,22.4757333 10.0804318,21.0144 10.5322727,19.6437333 L2.62345455,13.6042667 C1.08206818,16.7338667 0.213636364,20.2602667 0.213636364,24 C0.213636364,27.7365333 1.081,31.2608 2.62025,34.3882667 L10.5247955,28.3370667 C10.0772273,26.9728 9.82727273,25.5168 9.82727273,24"
+                      id="Fill-1"
+                      fill="#FBBC05"
+                    ></path>
+                    <path
+                      d="M23.7136364,10.1333333 C27.025,10.1333333 30.0159091,11.3066667 32.3659091,13.2266667 L39.2022727,6.4 C35.0363636,2.77333333 29.6954545,0.533333333 23.7136364,0.533333333 C14.4268636,0.533333333 6.44540909,5.84426667 2.62345455,13.6042667 L10.5322727,19.6437333 C12.3545909,14.112 17.5491591,10.1333333 23.7136364,10.1333333"
+                      id="Fill-2"
+                      fill="#EB4335"
+                    ></path>
+                    <path
+                      d="M23.7136364,37.8666667 C17.5491591,37.8666667 12.3545909,33.888 10.5322727,28.3562667 L2.62345455,34.3946667 C6.44540909,42.1557333 14.4268636,47.4666667 23.7136364,47.4666667 C29.4455,47.4666667 34.9177955,45.4314667 39.0249545,41.6181333 L31.5177727,35.8144 C29.3995682,37.1488 26.7323182,37.8666667 23.7136364,37.8666667"
+                      id="Fill-3"
+                      fill="#34A853"
+                    ></path>
+                    <path
+                      d="M46.1454545,24 C46.1454545,22.6133333 45.9318182,21.12 45.6113636,19.7333333 L23.7136364,19.7333333 L23.7136364,28.8 L36.3181818,28.8 C35.6879545,31.8912 33.9724545,34.2677333 31.5177727,35.8144 L39.0249545,41.6181333 C43.3393409,37.6138667 46.1454545,31.6490667 46.1454545,24"
+                      id="Fill-4"
+                      fill="#4285F4"
+                    ></path>
+                  </g>
+                </g>
+              </g>
             </svg>
             Continue with Google
           </span>
         </Button>
       </div>
-      {/* sign up with google end */}
-
-      {/* link start */}
-      <div className="flex justify-center">
-        <a className="text-primary text-sm font-bold">Sign in here</a>
+      {/* sign in with google end */}
+      {/* LINK */}
+      <div className="flex justify-center text-sm">
+        <span className="text-gray-500 mr-1">Already have an account?</span>
+        <Link to="/login" className="text-primary font-bold">
+          Sign in here
+        </Link>
       </div>
-      {/* link end */}
     </>
   );
 }

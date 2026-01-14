@@ -7,6 +7,9 @@ import CardUpcommingBill from "../components/Fragments/CardUpcommingBill";
 import CardRecentransactions from "../components/Fragments/CardRecentransactions";
 import CardStatistics from "../components/Fragments/CardStatistics";
 import CardExpensesBreakdown from "../components/Fragments/CardExpensesBreakdown";
+
+import { goalService, expensesService } from "../services/dataService";
+
 import {
   bills,
   expensesBreakdowns,
@@ -15,12 +18,14 @@ import {
   transactions,
   expensesStatistics,
 } from "../data";
-import { goalService } from "../services/dataService";
+
 import { AuthContext } from "../context/authContext";
 import AppSnackbar from "../components/Elements/AppSnackbar";
 
 function dashboard() {
   const [goals, setGoals] = useState({});
+  const [expenses, setExpenses] = useState([]);
+
   const { logout } = useContext(AuthContext);
 
   const [snackbar, setSnackbar] = useState({
@@ -52,7 +57,20 @@ function dashboard() {
     fetchGoals();
   }, []);
 
-  console.log(goals);
+  const fetchExpenses = async () => {
+    try {
+      const data = await expensesService();
+      console.log("ISI EXPENSES DARI API:", data);
+      setExpenses(data);
+    } catch (err) {
+      console.log("ERROR EXPENSES:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchGoals();
+    fetchExpenses();
+  }, []);
 
   return (
     <MainLayout>

@@ -157,9 +157,14 @@ function FormSignIn({ onSubmit }) {
       </div>
       {/* sign in with google end */}
       {/* link start */}
-      <div className="flex justify-center">
-        <a className="text-primary text-sm font-bold">Create an account</a>
-      </div>
+      <Link to="/register">
+        <div className="flex justify-center">
+          <span className="text-primary text-sm font-bold">
+            Create an account
+          </span>
+        </div>
+      </Link>
+
       {/* link end */}
     </>
   );
